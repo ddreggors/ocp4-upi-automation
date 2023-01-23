@@ -2,26 +2,14 @@
 - hosts: localhost
   gather_facts: False
   tasks:
-    - name: Check for cluster file
-      stat:
-        path: "{{ clusters_folder }}/{{ cluster }}.yaml"
-      register: cluster_file
+    - name: Initial setup and checks
+      import_role:
+        name: setup
       tags:
-      - validate
-
-    - fail:
-        msg: "Bailing out: cluster file is not found in the '{{ clusters_folder }}' folder"
-      when: not cluster_file.stat.exists
-      tags:
-      - validate
-
-    - include_vars: "{{ clusters_folder }}/{{ cluster }}.yaml"
-      tags:
-      - validate
+      - always
 
     - name: Validate the cluster is up
       import_role:
         name: cluster-validate
       tags:
       - validate
-
