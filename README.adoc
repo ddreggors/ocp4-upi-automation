@@ -182,6 +182,28 @@ ansible-playbook -i staging -e cluster=[cluster_name] restricted_static_ips_ova.
 9. The template file is edited to carry certain default settings and runtime parameters common to all the VMs
 10. VMs (bootstrap, master0-2, worker0-2) are generated in the designated folder and (in state of) **poweredon**
 
+== Post Install (Hybrid clusters)
+
+In the event that you need to add nodes to a hybrid cluster post install, there is a `new_worker_iso.yml` that can generate additional ISOs for new nodes. The requirements to this playbook are the same as the other playbooks here with 1 exception, you need to create a new `{{ clusters_folder }}/{{ cluster }}_additional_nodes.yaml` file.
+The format of that file is as follows:
+
+.Additional node file
+[source,yaml]
+----
+include::clusters/ocp-example_additional_nodes.yaml[]
+----
+
+By calling this file we override the node type arrays found in the main cluster file to either an empty array `[]` or an array of new nodes. This allows us to only create new ISOs not re-create any ISOs you have already created using the static_ips playbook and do not wish to re-create.
+
+NOTE: If you wish to re-create any previously created ISOs then make sure that the node is represented in this file as well when calling this playbook.
+
+NOTE: The role that we use for this playbook is a shared role and is used by the static_ips playbook as well. This means that we need the same variables defined in this playbook as we had defined in the static_ips playbook.
+
+.Example run
+----
+ansible-playbook -i staging -e "cluster=ocp-example" new_worker_isos.yml
+----
+
 == Final Check:
 
 If everything goes well you should be able to log into all of the machines using the following command:

@@ -52,14 +52,22 @@
     - name: Run the vmware role to setup vCenter folder
       import_role:
         name: vmware
+
     - name: Reset the vcenter.vm_power_state to poweredoff
       set_fact:
         vcenter: "{{ vcenter | combine({'vm_power_state': 'poweredoff'}, recursive=True) }}"
+
     - name: Echo the value of the variable vcenter.vm_power_state
       debug: var=vcenter.vm_power_state
+
+    - name: Generate isos for all nodes
+      import_role:
+        name: node_isos
+      
     - name: Create, configure, and boot VMs
       import_role:
         name: static_ips
+
     - name: Run steps to finish cluster install
       import_role:
         name: finish_install
