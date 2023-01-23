@@ -8,14 +8,14 @@
 - name: Get cluster operators
   k8s_info:
     kind: ClusterOperator
-    ca_cert: roles/cluster-validate/files/ca.crt
+    validate_certs: false
   register: operators
 
 - name: Check the operator
   k8s_info:
     kind: ClusterOperator
     name: "{{ item.metadata.name }}"
-    ca_cert: roles/cluster-validate/files/ca.crt
+    validate_certs: false
   register: operator
   until:
     - (operator.resources.0.status | community.general.json_query("conditions[?type=='Available'].status")).0 | bool
@@ -30,7 +30,7 @@
 - name: Get MachineConfigPools
   k8s_info:
     kind: MachineConfigPool
-    ca_cert: roles/cluster-validate/files/ca.crt
+    validate_certs: false
   register: mcp
   until:
     - mcp.resources.0.status.degradedMachineCount == 0
@@ -45,7 +45,6 @@
 - name: Check ClusterVersion
   k8s_info:
     kind: ClusterVersion
-    ca_cert: roles/cluster-validate/files/ca.crt
+    validate_certs: false
   register: cv
   failed_when: not cv.resources.0.status.history.0.state == 'Completed' or not cv.resources.0.status.desired.version == cv.resources.0.status.history.0.version
-
