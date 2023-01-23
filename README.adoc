@@ -71,7 +71,8 @@ include::group_vars/all.yml[]
 Now configure `ansible.cfg` and `staging` inventory file based on your environment before picking one of the 5 different install options listed below.
 
 ==== Update the `staging` inventory file
-Under the `webservers.hosts` entry, use one of two options below :
+Under the `webservers.hosts` entry, use one of two options below:
+
    1. **localhost** : if the `ansible-playbook` is being run on the same host  as the webserver that would eventually host bootstrap.ign file
    2. the IP address or FQDN of the machine that would run the webserver.
 
