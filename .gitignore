@@ -4,3 +4,4 @@ downloads/
 install-dir/
 roles/node_isos/files/*.txt
 roles/node_isos/files/*.cfg
+.gitlab-ci
