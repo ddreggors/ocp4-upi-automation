@@ -9,7 +9,6 @@ config:
   fips: false
   #networkType: OVNKubernetes
   #isolationMode: Multitenant
-  #installer_ssh_key: "{{ lookup('file', '{{ cluster }}_id_rsa.pub') }}"
   pull_secret: "{{ lookup('file', 'pullsecret') }}"
   master_schedulable: false
   hybrid: false
