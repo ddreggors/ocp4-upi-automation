@@ -2,7 +2,7 @@
   assert:
     that:
       - config.networkType in [ 'OpenShiftSDN', 'OVNKubernetes' ]
-    fail_msg: 
+    fail_msg:
       - config.networkType = {{ config.networkType }}
       - config.networkType must be OpenShiftSDN or OVNKubernetes
     success_msg: config.network is valid
@@ -12,7 +12,7 @@
   assert:
     that:
       - config.isolationMode in [ 'NetworkPolicy', 'Multitenant', 'Subnet' ]
-    fail_msg: 
+    fail_msg:
       - config.isolationMode = {{ config.isolationMode }}
       - config.isolationMode must be NetworkPolicy, Multitenant, or Subnet
     success_msg: config.isolationMode is valid
@@ -30,7 +30,7 @@
     force: false
 
 - name: Set installer ssh key variable
-  set_fact: 
+  set_fact:
     installer_ssh_key: "{{ lookup('file', '~/.ssh/{{ cluster }}_id_rsa.pub') }}"
 
 - name: Set the datacenter variable
@@ -155,7 +155,7 @@
     mode: '0664'
 
 - name: Run steps pertaining to proxy, if any
-  include: handle_proxy.yml
+  include_tasks: handle_proxy.yml
   when:
     - proxy is defined
     - proxy.enabled == true # noqa 601
@@ -165,4 +165,3 @@
     src: "{{ playbook_dir }}/install-dir/install-config.yaml"
     dest: "{{ playbook_dir }}/install-dir/install-config.yaml.orig"
     mode: '0664'
-  # when: (registry is not defined) or (registry.enabled is not defined) or (registry.enabled == false) # noqa 601

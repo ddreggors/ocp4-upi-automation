@@ -1,7 +1,11 @@
+bin
+downloads
+install-dir
+**/*.yml.git
+**/*.yml.orig
+**/pull-secret*.json
+**/pullsecret*
 ansible.log
-bin/
-downloads/
-install-dir/
 roles/node_isos/files/*.txt
 roles/node_isos/files/*.cfg
-.gitlab-ci
+clusters/ocp-test.yaml
